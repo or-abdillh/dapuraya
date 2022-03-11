@@ -16,7 +16,7 @@
     const router = useRouter()
     const backToHome = () => {
         setTimeout(() => {
-            router.push({ name: 'Home' })
+            router.push({ name: 'welcome' })
         }, 300)
     }
 </script>
