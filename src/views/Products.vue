@@ -7,12 +7,13 @@
 				<i class="fa fa-user"></i>
 				<p class="text-base">42 customer telah order</p>
 			</div>
-			<template v-for="card in 8" :key="card">
-				<CardProduct v-on:orderTap="showBottomSheet" :source="exampleCard" />
+			<template v-for="card in exampleCard" :key="card.id">
+				<CardProduct :source="card" />
 			</template>
 		</section>
 
 		<BottomSheet v-on:close="closeBottomSheet" :show="isShow" :order="order" />
+		<FloatingOrder v-on:order="showBottomSheet" />
 	</main>	
 </template>
 
@@ -23,6 +24,7 @@
 	import HeaderProducts from '@/components/HeaderProducts.vue'
 	import CardProduct from '@/components/CardProduct.vue'
 	import BottomSheet from '@/components/BottomSheet.vue'
+	import FloatingOrder from '@/components/FloatingOrder.vue'
 
 	const route = useRoute()
 	const router = useRouter()
@@ -53,13 +55,61 @@
 		}, 300);
 	}
  	
-	const exampleCard = {
-		thumb: '/american-risol.jpg',
-		title: 'American risol',
-		price: 45000,
-		prefix: 'Rp',
-		sold: 30,
-		stock: 44
-	}
+	const exampleCard = [
+		{
+			thumb: '/american-risol.jpg',
+			title: 'American risol',
+			price: 45000,
+			prefix: 'Rp',
+			sold: 30,
+			stock: 44,
+			id: 1
+		},
+		{
+			thumb: '/american-risol.jpg',
+			title: 'American risol',
+			price: 45000,
+			prefix: 'Rp',
+			sold: 30,
+			stock: 44,
+			id: 2
+		},
+		{
+			thumb: '/american-risol.jpg',
+			title: 'American risol',
+			price: 45000,
+			prefix: 'Rp',
+			sold: 30,
+			stock: 44,
+			id: 3
+		},
+		{
+			thumb: '/american-risol.jpg',
+			title: 'American risol',
+			price: 45000,
+			prefix: 'Rp',
+			sold: 30,
+			stock: 44,
+			id: 4
+		},
+		{
+			thumb: '/american-risol.jpg',
+			title: 'American risol',
+			price: 45000,
+			prefix: 'Rp',
+			sold: 30,
+			stock: 44,
+			id: 5
+		},
+		{
+			thumb: '/american-risol.jpg',
+			title: 'American risol',
+			price: 45000,
+			prefix: 'Rp',
+			sold: 30,
+			stock: 44,
+			id: 6
+		}
+	]
 
 </script>
