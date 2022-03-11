@@ -11,8 +11,8 @@
 
             <section class="flex justify-between items-end">
                 <div class="flex gap-2 items-center">
-                    <i class="fa fa-search"></i>
-                    <input type="search" class="outline-0 bg-primary border-b-2 border-gray-600" placeholder="search">
+                    <i class="fa fa-search"></i>                
+                    <input v-model="key" type="search" class="outline-0 bg-primary border-b-2 border-gray-600" placeholder="search">
                 </div>
                 <p class="font-medium text-sm">42 customer</p>
             </section>
@@ -21,7 +21,7 @@
 
     <section class="mt-36">
         <template v-for="order in 4" :key="order">
-            <template v-for="(card, x) in exampleOrder" :key="x">
+            <template v-for="(card, x) in filterOrder" :key="x">
                 <OrderCard :source="card" />
             </template>
         </template>
@@ -29,17 +29,19 @@
 </template>
 
 <script setup>
-    import { useRouter } from 'vue-router';
+    import { useRouter } from 'vue-router'
+    import { ref, watch } from 'vue'
     import OrderCard from '@/components/OrderCard.vue'
+    
     const router = useRouter()
 
     const exampleOrder = [
         {
-            name: 'Meta',
+            name: 'Agus',
             phone: '085654036XXX',
-            date: 'Sen 5 maret 2022',
-            pcs: 2,
-            price: 90000,
+            date: 'Rab 6 maret 2022',
+            pcs: 1,
+            price: 45000,
             prefix: 'Rp',
             item: 'American risol',
             paymentStatus: true
@@ -55,4 +57,11 @@
             paymentStatus: false
         }
     ]
+    
+    const filterOrder = ref(exampleOrder)
+    const key = ref('')
+
+    watch(key, val => {
+        filterOrder.value = exampleOrder.filter(order => order.name.toLowerCase().includes(val.toLowerCase()))
+    })
 </script>
