@@ -1,7 +1,10 @@
 <template>
 	<section :class="items.length > 0 && amounts > 0 ? 'bottom-10' : '-bottom-full'" class="duration-300 fixed left-0 right-0">
 		<div class="flex justify-between items-center w-9/12 md:w-4/12 lg:w-3/12 mx-auto xl:w-3/12 bg-green-600 px-5 py-3 rounded-full text-gray-100 shadow">
-			<p>{{ amounts }} item</p>
+			<p>
+				<i class="fa fa-circle text-yellow-400 text-sm"></i>
+				{{ amounts }} item
+			</p>
 			<p>Rp {{ total.toLocaleString('id') }}</p>
 			<span @click="order()" class="active:scale-75 duration-300 font-medium">ORDER</span>
 		</div>
