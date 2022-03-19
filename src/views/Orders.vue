@@ -14,7 +14,7 @@
                     <i class="fa fa-search"></i>                
                     <input v-model="key" type="search" class="outline-0 bg-primary border-b-2 border-gray-600" placeholder="search">
                 </div>
-                <p class="font-medium text-sm">42 customer</p>
+                <p class="font-medium text-sm">{{ filteredOrders.length }} customer</p>
             </section>
         </div>
     </section>

@@ -3,7 +3,7 @@
 		<HeaderProducts :title="dropPointName" />
 
 		<section class="columns-2 mt-40">
-			<div @click="toOrders" class="active:scale-95 duration-300 w-42 flex items-center gap-4 mb-5 bg-orange-500 rounded-xl px-3 py-2 text-gray-50">
+			<div @click="toOrders" class="scale-95 duration-300 w-42 flex items-center gap-4 mb-5 bg-orange-500 rounded-xl px-3 py-2 text-gray-50">
 				<i class="fa fa-user"></i>
 				<p class="text-base">{{ ordersCount }} customer telah order</p>
 			</div>
@@ -26,10 +26,12 @@
 	import CardProduct from '@/components/CardProduct.vue'
 	import BottomSheet from '@/components/BottomSheet.vue'
 	import FloatingOrder from '@/components/FloatingOrder.vue'
+	import { useDropPoints } from '@/stores/dropPoints' 
 
 	const route = useRoute()
 	const router = useRouter()
-	const dropPointName = computed(() => route.params.dropPointName)
+	const dropPoints = useDropPoints()
+	const dropPointName = computed(() => dropPoints.current.name)
 
 	//Get products and orders count
 	const products = ref([])
@@ -40,7 +42,7 @@
 			else alert(response)
 		})
 
-		http.get('/orders/count', response => {
+		http.get(`/orders/count/${dropPoints.current.id}`, response => {
 			if (response.status) ordersCount.value = response.results.count
 			else alert(response)
 		})
