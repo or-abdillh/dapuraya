@@ -4,8 +4,8 @@
             <section class="flex items-center gap-6 mb-8">
                 <i @click="router.go(-1)" class="fa fa-arrow-left active:scale-75 duration-300"></i>
                 <div>
-                    <h1 class="font-medium">Marabahan</h1>
-                    <p class="text-sm">Sabtu 05 maret 2022</p>
+                    <h1 class="font-medium">{{ dropPoint.name }}</h1>
+                    <p class="text-sm">{{ currentOpenOrder.date }}</p>
                 </div>
             </section>
 
@@ -20,48 +20,39 @@
     </section>
 
     <section class="mt-36">
-        <template v-for="order in 4" :key="order">
-            <template v-for="(card, x) in filterOrder" :key="x">
-                <OrderCard :source="card" />
-            </template>
+        <template v-for="order in filteredOrders" :key="order.id">
+            <OrderCard :source="order" />
         </template>
     </section>
 </template>
 
 <script setup>
-    import { useRouter } from 'vue-router'
-    import { ref, watch } from 'vue'
+    import { useRouter, useRoute } from 'vue-router'
+    import { ref, watch, computed, onMounted } from 'vue'
+    import { useOpenOrders } from '@/stores/openOrders'
+    import { useDropPoints } from '@/stores/dropPoints'
     import OrderCard from '@/components/OrderCard.vue'
+    import http from '@/http'
     
     const router = useRouter()
+    const route = useRoute()
+    const openOrders = useOpenOrders()
+    const dropPoints = useDropPoints()
 
-    const exampleOrder = [
-        {
-            name: 'Agus',
-            phone: '085654036XXX',
-            date: 'Rab 6 maret 2022',
-            pcs: 1,
-            price: 45000,
-            prefix: 'Rp',
-            item: 'American risol',
-            paymentStatus: true
-        },
-        {
-            name: 'Meta',
-            phone: '085654036XXX',
-            date: 'Sen 5 maret 2022',
-            pcs: 2,
-            price: 90000,
-            prefix: 'Rp',
-            item: 'American risol',
-            paymentStatus: false
-        }
-    ]
+    const orders = ref([])
+    const filteredOrders = ref([])
+    const currentOpenOrder = computed(() => openOrders.current)
+    const dropPoint = computed(() => dropPoints.current)
     
-    const filterOrder = ref(exampleOrder)
+    onMounted(() => {
+        http.get(`/orders/${dropPoints.current.id}`, response => {
+            if (response.status) [orders.value, filteredOrders.value] = [response.results.orders, response.results.orders]
+        })
+    })
+        
     const key = ref('')
 
     watch(key, val => {
-        filterOrder.value = exampleOrder.filter(order => order.name.toLowerCase().includes(val.toLowerCase()))
+        filteredOrders.value = orders.value.filter(order => order.customer.toLowerCase().includes(val.toLowerCase()))
     })
 </script>

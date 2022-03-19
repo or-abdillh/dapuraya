@@ -10,7 +10,7 @@
 		</section>
 
 		<section class="mt-12">
-			<template v-for="(item, x) in dropPoints" :key="x">
+			<template v-for="(item, x) in dropPointsArr" :key="x">
 				<PillNavigation :source="item" />
 			</template>
 		</section>
@@ -23,12 +23,12 @@
 	import http from '@/http'
 	import { onMounted, ref } from 'vue'
 
-	const dropPoints = ref({})
+	const dropPointsArr = ref({})
 
 	onMounted(() => {
 		http.get('/drop-points/open-order', response => {
 			if (response.status) {
-				dropPoints.value = response.results.dropPoints
+				dropPointsArr.value = response.results.dropPoints
 			}
 		})
 	})

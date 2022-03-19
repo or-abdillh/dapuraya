@@ -19,15 +19,21 @@
 
 	import { useRouter } from 'vue-router'
 	import { useOpenOrders } from '@/stores/openOrders'
+	import { useDropPoints } from '@/stores/dropPoints'
 
 	const router = useRouter()
 	const openOrders = useOpenOrders()
+	const dropPoints = useDropPoints()
 
 	const pillAction = () => {
 		if ( props.source.openOrders.length > 0 ) {
 		
-			//Fill openOrders state
+			//Fill openOrders and dropPoints state
 			openOrders.fillOpenOrders(props.source.openOrders)
+			dropPoints.fillCurrent({
+				id: props.source.dropPointID,
+				name: props.source.name
+			})
 			
 			setTimeout(() => {
 				router.push({

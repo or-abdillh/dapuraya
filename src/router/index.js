@@ -18,7 +18,7 @@ const routes = [
 	},
 	{
 		name: 'Orders',
-		path: '/orders',
+		path: '/orders/:dropPointName',
 		component: () => import('@/views/Orders.vue')
 	}
 ]

@@ -67,7 +67,7 @@
 
 	const toOrders = () => {
 		setTimeout(() => {
-			router.push({ name: 'Orders' })
+			router.push({ name: 'Orders', params: { dropPointName: dropPointName.value } })
 		}, 300);
 	}
  	
