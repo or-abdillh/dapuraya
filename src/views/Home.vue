@@ -10,8 +10,8 @@
 		</section>
 
 		<section class="mt-12">
-			<template v-for="(pill, x) in pills" :key="x">
-				<PillNavigation :source="pill" />
+			<template v-for="(item, x) in dropPoints" :key="x">
+				<PillNavigation :source="item" />
 			</template>
 		</section>
 	</main>
@@ -20,23 +20,17 @@
 <script setup>
 
 	import PillNavigation from '@/components/PillNavigation.vue'
+	import http from '@/http'
+	import { onMounted, ref } from 'vue'
 
-	const pills = [
-		{
-			title: 'Amuntai',
-			subtitle: 'belum open order',
-			useGreenIcon: false 
-		},
-		{
-			title: 'Handi Bakti',
-			subtitle: 'belum open order',
-			useGreenIcon: false 
-		},
-		{
-			title: 'Marabahan',
-			subtitle: 'Sabtu, 12 maret 2022',
-			useGreenIcon: true 
-		}
-	]
+	const dropPoints = ref({})
 
+	onMounted(() => {
+		http.get('/drop-points/open-order', response => {
+			if (response.status) {
+				dropPoints.value = response.results.dropPoints
+			}
+		})
+	})
+	
 </script>
