@@ -14,5 +14,6 @@ export const useOpenOrders = defineStore('openOrders', {
 		fillCurrent(item) {
 			this.current = item
 		}
-	}
+	}, 
+	persist: true
 })
