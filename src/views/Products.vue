@@ -12,7 +12,7 @@
 			</template>
 		</section>
 		
-		<BottomSheet v-on:close="closeBottomSheet" :show="isShow" :order="order" />
+		<BottomSheet v-on:close="closeBottomSheet" :show="isShow" />
 		<FloatingOrder v-on:order="showBottomSheet" />
 	</main>	
 </template>
@@ -27,10 +27,12 @@
 	import BottomSheet from '@/components/BottomSheet.vue'
 	import FloatingOrder from '@/components/FloatingOrder.vue'
 	import { useDropPoints } from '@/stores/dropPoints' 
+	import { useOrders } from '@/stores/orders'
 
 	const route = useRoute()
 	const router = useRouter()
 	const dropPoints = useDropPoints()
+	const orders = useOrders()
 	const dropPointName = computed(() => dropPoints.current.name)
 
 	//Get products and orders count
@@ -49,14 +51,9 @@
 	})
 
 	const isShow = ref(false)
-	let order = ref({
-		pcs: 0,
-		total: 45000
-	})
 
 	const showBottomSheet = val => {
 		setTimeout(() => {
-			order.value = val
 			isShow.value = true
 		}, 300)
 	}

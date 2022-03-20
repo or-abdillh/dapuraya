@@ -3,26 +3,26 @@ import { defineStore } from 'pinia'
 export const useOrders = defineStore('orders', {
 	state() {
 		return {
-			items: [],
-			amounts: 0,
+			carts: [],
+			amount: 0,
 			total: 0
 		}
 	},
 	actions: {
-		addItem(payload) {
-			const id = payload.id
+		fillOrder(payload) {
+			const id = payload.productId
 			let currentDuplicate;
 
-			if ( this.items.length > 0 ) {
-				this.items.forEach((item, x) => {
-					if (item.id === id) {
-						this.items[x] = payload
-						currentDuplicate = item.id
+			if ( this.carts.length > 0 ) {
+				this.carts.forEach((item, x) => {
+					if (item.productId === id) {
+						this.carts[x] = payload
+						currentDuplicate = item.productId
 					}
 				})
 			}
 
-			if ( payload.id !== currentDuplicate ) this.items.push(payload)
+			if ( payload.productId !== currentDuplicate ) this.carts.push(payload)
 		},
 		getters: {
 			getCurrentItem(state) {

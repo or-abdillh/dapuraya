@@ -1,5 +1,5 @@
 <template>
-	<section @click="pillAction" class="flex justify-between items-center mb-5 hover:scale-95 active:bg-gray-50 duration-300 bg-white px-5 py-4 rounded-full shadow-sm">
+	<section  @click="pillAction" class="flex justify-between items-center mb-5 hover:scale-95 active:bg-gray-50 duration-300 bg-white px-5 py-4 rounded-full shadow-sm">
 		<div class="flex items-center">
 			<i 
 				:class="source.openOrders.length > 0 ? 'text-green-600 bg-green-300' : 'text-red-600 bg-red-300'"

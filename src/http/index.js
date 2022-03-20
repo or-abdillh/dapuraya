@@ -11,5 +11,13 @@ export default {
 		} catch(err) {
 			callback(err)
 		}
+	},
+	async post(url, body, callback, head = { headers }) {
+		try {
+			const response = await axios.post(baseURL + url, body, head)
+			callback(response)
+		} catch(err) {
+			callback(err)
+		}
 	}
 }

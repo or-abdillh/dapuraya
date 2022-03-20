@@ -1,9 +1,9 @@
-<template>
+<template>	
 	<section class="break-inside-avoid w-42 mb-8 rounded-lg bg-white shadow-sm overflow-hidden">
 		<img :src="source.thumbnail" :alt="source.thumbnail" class="active:scale-95 z-10 duration-300 w-full aspect-square" />
 		<div class="py-4 px-2 text-center text-sm">
-			<h1 class="font-medium">{{ source.title }}</h1>
-			<h2 class="font-medium">Rp {{ source.price.toLocaleString('id') }}</h2>
+			<h1 class="font-medium">{{ source.name }}</h1>
+			<h2 class="text-sm">Rp {{ source.price.toLocaleString('id') }}</h2>
 			<p class="text-xs">
 				stok {{ source.stock }}, masih ada <span class="text-red-600">{{ source.stock - source.sold }}</span>
 			</p>
@@ -33,12 +33,12 @@
 
 	const count = ref(0)
 	const price = props.source.price
-	const id = props.source.id
+	const productId = props.source.id
 
 	const decrement = () => {
 		if ( count.value > 0 ) {
 			count.value--
-			orders.addItem({ amount: count.value, price: price * count.value, id })
+			orders.fillOrder({ amounts: count.value, price: price * count.value, productId })
 		}
 	}
 
@@ -46,8 +46,7 @@
 	const increment = () => {
 		if ( count.value < limit ) {
 			count.value++
-			orders.addItem({ amount: count.value, price: price * count.value, id })
-			console.log(orders.items)
+			orders.fillOrder({ amounts: count.value, price: price * count.value, productId })
 		}
 	}
 
