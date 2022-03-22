@@ -1,9 +1,11 @@
 <template>
 	<section  @click="pillAction" class="flex justify-between items-center mb-5 hover:scale-95 active:bg-gray-50 duration-300 bg-white px-5 py-4 rounded-full shadow-sm">
 		<div class="flex items-center">
-			<i 
-				:class="source.openOrders.length > 0 ? 'text-green-600 bg-green-300' : 'text-red-600 bg-red-300'"
-				class="fas fa-map-marker-alt grid place-items-center rounded-full block text-lg mr-4" style="width:35px; height: 35px"></i>
+			<a class="active:scale-95 duration-300" :href="source.gmaps" target="_blank">
+				<i 
+					:class="source.status ? 'text-green-600 bg-green-300' : 'text-red-600 bg-red-300'"
+					class="fas fa-map-marker-alt grid place-items-center rounded-full block text-lg mr-4" style="width:35px; height: 35px"></i>
+			</a>
 			<div>
 				<h1 class="font-medium text-lg">{{ source.name }}</h1>
 				<p class="text-base">{{ source.openOrders.length > 0 ? source.openOrders[0].date : 'Belum open order' }}</p>
@@ -26,7 +28,7 @@
 	const dropPoints = useDropPoints()
 
 	const pillAction = () => {
-		if ( props.source.openOrders.length > 0 ) {
+		if ( props.source.openOrders.length > 0 && props.source.status ) {
 		
 			//Fill openOrders and dropPoints state
 			openOrders.fillOpenOrders(props.source.openOrders)
