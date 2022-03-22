@@ -24,10 +24,8 @@ export const useOrders = defineStore('orders', {
 
 			if ( payload.productId !== currentDuplicate ) this.carts.push(payload)
 		},
-		getters: {
-			getCurrentItem(state) {
-				return state.items
-			}
+		restore() {
+			[this.total, this.amount, this.carts] = [0, 0, []]
 		}
 	}
 })

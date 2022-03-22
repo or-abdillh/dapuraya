@@ -2,11 +2,11 @@
 	<main>
 		<HeaderProducts :title="dropPointName" />
 
-		<section @click="toOrders" class="mt-40 w-6/12 h-auto flex items-center px-3 py-2 gap-3  duration-300 bg-orange-500 rounded-xl text-gray-50">
-			<i class="fa fa-user"></i>
-			<small class="text-base">{{ ordersCount }} customer telah order</small>
-		</section>
-		<section class="columns-2 mt-40 bg-green-200">
+		<section class="columns-2 mt-40">
+			<section v-if="ordersCount > 0" @click="toOrders" class="w-full mb-5 h-auto flex items-center px-3 py-2 gap-3 duration-300 bg-orange-500 rounded-xl text-gray-50">
+				<i class="fa fa-user"></i>
+				<small class="text-base">{{ ordersCount }} customer telah order</small>
+			</section>
 			<template v-for="card in products" :key="card.id">
 				<CardProduct :source="card" />
 			</template>

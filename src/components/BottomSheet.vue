@@ -18,10 +18,9 @@
 	<section :class="show ? 'bottom-0' : '-bottom-full'" class="z-30 duration-300 fixed bottom-0 right-0">
 		<div class="w-full md:w-6/12 lg:w-5/12 md:mx-auto xl:w-4/12 bg-green-500 py-5 px-8 rounded-t-3xl">
 			<div class="text-gray-100 flex justify-between items-center border-b-2 border-gray-200 pb-3">
-				<p>{{ order.amount }} item, Rp.{{ order.total.toLocaleString('id') }},-</p>
+				<p>{{ orders.amount }} item, Rp.{{ orders.total.toLocaleString('id') }},-</p>
 				<small class="text-xs">*belum termasuk biaya ongkir</small>
 			</div>
-			
 			<form @submit.prevent="submitForm" class="flex flex-wrap gap-3 mt-6 justify-between">
 				<input class="field" v-model="form.order.phone" type="number" placeholder="No Whatsapp" required>
 				<input class="field" v-model="form.order.customer" type="text" placeholder="Nama" required>
@@ -56,7 +55,6 @@
 	const openOrders = useOpenOrders()
 
 	const carts = computed(() => orders.carts)
-	const order = computed(() => orders)
 
 	const props = defineProps({
 		show: {
@@ -68,16 +66,12 @@
 	//Form
 	const form = reactive({
 		order: {
-			openOrderId: openOrders.current.id,
-			dropPointId: dropPoints.current.id,
+			openOrderId: computed(() => openOrders.current.id),
+			dropPointId: computed(() => dropPoints.current.id),
 			customer: '',
 			phone: '',
 			address: '',
 			delivered: 1,
-			total: {
-				price: order.value.total,
-				item: order.value.amount
-			}
 		},
 		carts: carts.value
 	})
@@ -91,8 +85,10 @@
 		setTimeout(() => {
 			btnStatus.value = 'memporoses ...'
 			http.post('/order', form, response => {
-				if (response.status) {
+				if (response.status) {			
 					setTimeout(() => {
+						//Restore orders
+						orders.restore()
 						router.push({ name: 'Notification' })
 					}, 300)
 				}
