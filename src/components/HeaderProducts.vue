@@ -20,7 +20,7 @@
 					<span 
 					:class="currentDate === arr.id ? 'border-b-4 border-green-500' : ''"
 					class="rounded pb-1 duration-300"
-					style="min-width: 30%"
+					style="min-width: 25%; max-width: 30%"
 					@click="clicked(arr)"
 					>{{ arr.date }}</span>
 				</template>
